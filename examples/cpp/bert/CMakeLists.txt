@@ -13,11 +13,11 @@
 # limitations under the License.
 
 add_executable(bert_example bert_example.cc)
-target_link_libraries(bert_example PUBLIC -lcublas -lcublasLt -lcudart nvtx_utils Bert)
+target_link_libraries(bert_example PUBLIC -lmpi -lmpi_cxx -lcublas -lcublasLt -lcudart nvtx_utils Bert)
 if (SPARSITY_SUPPORT)
-target_link_libraries(bert_example PUBLIC -lcusparse -lcusparseLt)
+target_link_libraries(bert_example PUBLIC -lmpi -lmpi_cxx -lcusparse -lcusparseLt)
 endif()
 
 add_executable(bert_triton_example bert_triton_example.cc)
-target_link_libraries(bert_triton_example PUBLIC -lcublas -lcublasLt -lcudart -lpthread
+target_link_libraries(bert_triton_example PUBLIC -lmpi -lmpi_cxx -lcublas -lcublasLt -lcudart -lpthread
                       BertTritonBackend TransformerTritonBackend nvtx_utils mpi_utils nccl_utils)

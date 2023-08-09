@@ -53,11 +53,11 @@ target_link_libraries(  # Libs for test_penalty_kernels
     sampling_penalty_kernels beam_search_penalty_kernels memory_utils cuda_utils logger)
 target_link_libraries(  # Libs for test_sampling_kernel
   unittest PUBLIC
-    -lcudart
+    -lcudart -lmpi -lmpi_cxx
     sampling_topk_kernels sampling_topp_kernels memory_utils tensor cuda_utils logger)
 target_link_libraries(  # Libs for test_sampling_layer
   unittest PUBLIC
-    -lcublas -lcublasLt -lcudart
+    -lmpi -lmpi_cxx -lcublas -lcublasLt -lcudart
     cublasMMWrapper memory_utils
     DynamicDecodeLayer TopKSamplingLayer TopPSamplingLayer tensor cuda_utils logger)
 target_link_libraries(  # Libs for test_tensor
@@ -65,7 +65,7 @@ target_link_libraries(  # Libs for test_tensor
 
 remove_definitions(-DTORCH_CUDA=1)
 add_executable(test_gemm test_gemm.cu)
-target_link_libraries(test_gemm PUBLIC -lcublas -lcudart -lcurand gemm cublasMMWrapper tensor cuda_utils logger)
+target_link_libraries(test_gemm PUBLIC -lmpi -lmpi_cxx -lcublas -lcudart -lcurand gemm cublasMMWrapper tensor cuda_utils logger)
 
 add_executable(test_gpt_kernels test_gpt_kernels.cu)
 target_link_libraries(test_gpt_kernels PUBLIC
@@ -73,10 +73,10 @@ target_link_libraries(test_gpt_kernels PUBLIC
 
 add_executable(test_activation test_activation.cu)
 target_link_libraries(test_activation PUBLIC
-                    -lcublas -lcublasLt -lcudart
+                    -lmpi -lmpi_cxx -lcublas -lcublasLt -lcudart
                     activation_kernels memory_utils cuda_utils logger)
 
 add_executable(test_context_decoder_layer test_context_decoder_layer.cu)
-target_link_libraries(test_context_decoder_layer PUBLIC
-                      ParallelGpt -lcublas -lcublasLt -lcudart
+target_link_libraries(test_context_decoder_layer PUBLIC -lmpi -lmpi_cxx 
+                      ParallelGpt -lmpi -lmpi_cxx -lcublas -lcublasLt -lcudart
                       memory_utils tensor cuda_utils logger)
