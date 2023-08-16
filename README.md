@@ -100,6 +100,21 @@ The following code lists the directory structure of FasterTransformer:
 
 Note that many folders contains many sub-folders to split different models. Quantization tools are move to `examples`, like `examples/tensorflow/bert/bert-quantization/` and `examples/pytorch/bert/bert-quantization-sparsity/`.
 
+### Instructions for build
+git clone https://github.com/karthikiitm87/FasterTransformer.git
+cd FasterTransformer
+git submodule init && git submodule update
+mkdir -p build && cd build
+cmake -DSM=80` -DCMAKE_BUILD_TYPE=Release -DBUILD_PYT=ON -DBUILD_MULTI_GPU=ON .. #Check the compute capability of the GPU and adjust the DSM flag accordingly
+make -j12
+
+export CUDA_HOME=/usr/local/cuda-11.7
+export CPATH=$CUDA_HOME/include:$CPATH
+export PATH=/usr/local/cuda-11.7/bin:$PATH
+export CUDNN_LIBRARY=/home/karthiks/miniconda3/envs/novator/lib/python3.10/site-packages/nvidia/cudnn/lib
+export CUDNN_LIB_DIR=/home/karthiks/miniconda3/envs/novator/lib/python3.10/site-packages/nvidia/cudnn/lib
+export CUDNN_LIBRARY_PATH=/home/karthiks/miniconda3/envs/novator/lib/python3.10/site-packages/nvidia/cudnn/lib/libcudnn.so.8
+
 
 ### Global Environment
 
